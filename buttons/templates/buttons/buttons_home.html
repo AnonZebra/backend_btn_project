@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Button</title>
+    <style>
+        ol li {
+          margin-bottom: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Click me!">
+    </form>
+    <p>When you've clicked the button, take a look in the terminal/bash/console window that you ran
+    <code>python manage.py runserver</code> in. You should see a message.</p>
+
+    <p>To understand the chain that happens:</p>
+    <ol>
+        <li>Look in 'backend_btn_project/urls.py'. There you see that the include function is used to reroute
+        requests to 'buttons/urls.py'.</li>
+        <li>Look in 'buttons/urls.py'. There you see that the view <code>buttons_home_view</code> is imported from
+        'views.py' and used.</li>
+        <li>Look in 'buttons/views.py'. The function <code>buttons_home_view</code> checks if the request
+        has the method "POST" (i. e. data from a form with attribute method='post' has been submitted with the
+        request). If this is true, the function <code>say_hi_in_terminal</code> (imported from 'buttons/button_functions.py'
+        is called. In either case, <code>buttons_home_view</code> returns a rendered page based on the html template
+        located at 'buttons/templates/buttons/buttons_home.html'.</li>
+        <li>Look in the html template 'buttons/templates/buttons/buttons_home.html' (or right click on the button here
+        and select 'inspect element'). You'll see that a very simple form is used, like this:
+            <pre>&lt;form method="post"&gt;
+&#123;% csrf_token %&#125;
+&lt;input type="submit" value="Click me!"&gt;
+&lt;/form&gt;</pre>
+            <p>So no particular data is sent by the form - it just makes sure that a request using the "POST"
+            method is sent.</p>
+        </li>
+        <li>Look inside 'buttons/button_functions.py'. There you see what the function <code>say_hi_in_terminal</code>
+        does (it simply prints a message).</li>
+        <li>And that's it!</li>
+    </ol>
+    <p>Of course, printing a message to the console isn't very impressive. But you could easily replace
+        the <code>say_hi_in_terminal</code> function with whatever function you like of course (just remember
+        to import it). At the same time, the particular method used here (making whatever "POST" method request
+        trigger the function being called) probably is very bad practice. This was done just to give an idea about
+        how to do these things. I entirely based this example on things I learned watching this tutorial,
+        which I highly recommend: <br>
+    <a href="https://www.youtube.com/watch?v=F5mRW0jo-U4">Python Django Web Framework
+        - Full Course for Beginners (from freeCodeCamp/Coding for Entrepreneurs)</a></p>
+
+</body>
+</html>
